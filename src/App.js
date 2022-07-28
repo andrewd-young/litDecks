@@ -20,13 +20,13 @@ function App() {
 
 	if (inputData.learnMode) {
 		return (
-			<div className="mx-auto my-auto w-3/4 h-3/4">
+			<div className="mx-auto my-auto w-4/5 h-3/4">
 				<Learn terms={inputData.terms} />
 			</div>
 		);
 	} else {
 		return (
-			<div className="mx-auto my-auto w-3/4 h-3/4">
+			<div className="mx-auto my-auto w-4/5 h-3/4">
 				<div className="mt-12 space-y-5">
 					<h1 className="text-7xl dark:text-white">
 						<b>litDecks</b>
