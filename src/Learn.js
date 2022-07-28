@@ -1,5 +1,6 @@
 import MultipleChoice from "./MultipleChoice";
 import Written from "./Written";
+import Results from "./Results";
 import {useState} from "react";
 
 let progress = 50;
@@ -24,6 +25,7 @@ export default function Learn(terms) {
 			</div>
 			{/* <p className="text-white">wordCount = {wordCounter}</p> */}
 			{wordCounter != 10 && questionElement}
+      {wordCounter === 10 && <Results terms={termsArray}></Results>}
 			<p className="text-base dark:text-slate-400">
 				Press <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Enter</kbd> to {wordCounter != 10 ? "answer" : "continue"}
 			</p>

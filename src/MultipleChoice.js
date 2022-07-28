@@ -21,16 +21,6 @@ export default function MultipleChoice(props) {
 		[randomTerms[i], randomTerms[j]] = [randomTerms[j], randomTerms[i]];
 	}
 
-  // //listen for when enter key is pressed
-  // let handleKeyDown = (e) => {
-  //   if (e.key === "Enter") {
-  //     console.log('enter');
-  //     // props.setLearnCounter();
-  //   }
-  // }
-
-  // document.addEventListener('keydown', function(event){console.log(`Key: ${event.key} with keycode ${event.keyCode} has been pressed on ${event.target.tagName}`);});
-
 	return (
 		<a className="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 space-y-5">
 			<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{termsArray[answerIndex][1]}</label>

@@ -7,6 +7,7 @@ function parseTerms(terms) {
 	const termsArray2d = [];
 	for (let i = 0; i < termsArray.length; i++) {
 		termsArray2d.push(termsArray[i].split("\t"));
+    termsArray2d[i].push(0);
 	}
 	return termsArray2d;
 }
