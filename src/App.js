@@ -30,7 +30,7 @@ function App() {
 			<div className="mx-auto my-auto w-4/5 h-3/4">
 				<div className="mt-12 space-y-5">
 					<h1 className="text-7xl dark:text-white">
-						<b>litDecks</b>
+						<b>toLearned</b>
 					</h1>
 					<p className="text-lg dark:text-slate-400">
 						Study it all right here - <b>free forever</b>

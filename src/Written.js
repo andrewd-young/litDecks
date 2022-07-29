@@ -11,7 +11,7 @@ export default function Written(props) {
 	};
 
 	return (
-		<div className="relative space-y-5 block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md  dark:bg-gray-800 dark:border-gray-700 h-52">
+		<div className="relative space-y-5 block p-6 bg-white rounded-lg border border-gray-200 shadow-md  dark:bg-gray-800 dark:border-gray-700 h-52">
 			<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{termsArray[answerIndex][1]}</label>
 			<input
 				onChange={handleChange}

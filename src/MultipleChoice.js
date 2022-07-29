@@ -22,14 +22,14 @@ export default function MultipleChoice(props) {
 	}
 
 	return (
-		<a className="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 space-y-5">
+		<a className="block p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 space-y-5">
 			<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{termsArray[answerIndex][1]}</label>
 			<ul className="grid gap-6 w-full md:grid-cols-2">
 				{randomTerms.map((term) => {
 					return <Choice potentialAnswer={term[0]} key={term[0]} setLearnCounter={props.setLearnCounter}></Choice>;
 				})}
 				<li>
-					<input checked="yes" type="radio" name="choice" value="choice-big" className="peer hidden"></input>
+					<input checked="true" type="radio" name="choice" value="choice-big" className="peer hidden"></input>
 				</li>
 			</ul>
 		</a>
