@@ -19,7 +19,6 @@ export default function Result(props) {
 
 	//call props.setLearnCounter() when enter pressed
 	document.addEventListener('keypress', (event) => {
-		var name = event.key;
 		var code = event.code;
 		// Alert the key name and key code on keydown
 		if(code === "Enter") {

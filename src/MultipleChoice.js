@@ -20,6 +20,8 @@ export default function MultipleChoice(props) {
 		let j = Math.floor(Math.random() * (i + 1));
 		[randomTerms[i], randomTerms[j]] = [randomTerms[j], randomTerms[i]];
 	}
+	
+	randomTerms = randomTerms.filter((item, index) => randomTerms.indexOf(item) === index);
 
 	return (
 		<a className="block p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 space-y-5">
@@ -29,7 +31,7 @@ export default function MultipleChoice(props) {
 					return <Choice potentialAnswer={term[0]} answerIndex={answerIndex} termsArray={termsArray} key={term[0]} setLearnCounter={props.setLearnCounter}></Choice>;
 				})}
 				<li>
-					<input checked="true" type="radio" name="choice" value="choice-big" className="peer hidden"></input>
+					<input checked type="radio" name="choice" value="choice-big" className="peer hidden"></input>
 				</li>
 			</ul>
 		</a>
@@ -40,13 +42,13 @@ function Choice(props) {
 	const [selected, setSelected] = useState("yes");
 
 	const handleChange = (event) => {
-		console.log(event.target.value);
-		setSelected(event.target.value);
+		console.log(true);
+		setSelected(event.target.checked);
 	};
 
 	return (
 		<li>
-			<label className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+			<label className={selected ? "inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700" : "inline-flex justify-between items-center p-5 w-full bg-white rounded-lg border cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:text-blue-500 border-blue-600 text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700"}>
 				{props.potentialAnswer}
 				<input
 					type="radio"
@@ -54,15 +56,14 @@ function Choice(props) {
 					value="choice-big"
 					className="peer"
 					onChange={handleChange}
-					defaultChecked={selected === "yes"}
+					checked={selected === "yes"}
 					onKeyDown={(e) => {
 						if (e.key === "Enter") {
 							props.setLearnCounter();
-              if(props.potentialAnswer === props.termsArray[props.answerIndex][0])
-              {
-                props.termsArray[props.answerIndex][2] = 1;
-                console.log("correct");
-              }
+							if (props.potentialAnswer === props.termsArray[props.answerIndex][0]) {
+								props.termsArray[props.answerIndex][2] = 1;
+								console.log("correct");
+							}
 						}
 					}}
 				></input>

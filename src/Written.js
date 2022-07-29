@@ -20,6 +20,8 @@ export default function Written(props) {
 						props.setLearnCounter();
 						if (message === termsArray[answerIndex][0]) {
 							termsArray[answerIndex][2] += 1;
+						} else {
+							termsArray[answerIndex][2] -= 1;
 						}
 						setMessage("");
 					}
