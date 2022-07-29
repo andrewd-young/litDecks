@@ -26,7 +26,7 @@ export default function MultipleChoice(props) {
 			<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{termsArray[answerIndex][1]}</label>
 			<ul className="grid gap-6 w-full md:grid-cols-2">
 				{randomTerms.map((term) => {
-					return <Choice potentialAnswer={term[0]} key={term[0]} setLearnCounter={props.setLearnCounter}></Choice>;
+					return <Choice potentialAnswer={term[0]} answerIndex={answerIndex} termsArray={termsArray} key={term[0]} setLearnCounter={props.setLearnCounter}></Choice>;
 				})}
 				<li>
 					<input checked="true" type="radio" name="choice" value="choice-big" className="peer hidden"></input>
@@ -54,10 +54,15 @@ function Choice(props) {
 					value="choice-big"
 					className="peer"
 					onChange={handleChange}
-					checked={selected === "yes"}
+					defaultChecked={selected === "yes"}
 					onKeyDown={(e) => {
 						if (e.key === "Enter") {
 							props.setLearnCounter();
+              if(props.potentialAnswer === props.termsArray[props.answerIndex][0])
+              {
+                props.termsArray[props.answerIndex][2] = 1;
+                console.log("correct");
+              }
 						}
 					}}
 				></input>

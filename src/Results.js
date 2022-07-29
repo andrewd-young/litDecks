@@ -17,6 +17,16 @@ export default function Result(props) {
 		}
 	}
 
+	//call props.setLearnCounter() when enter pressed
+	document.addEventListener('keypress', (event) => {
+		var name = event.key;
+		var code = event.code;
+		// Alert the key name and key code on keydown
+		if(code === "Enter") {
+			props.setLearnCounter();
+		}
+	  }, false);
+
 	return (
 		<div className="grid grid-flow-col auto-cols-max gap-0 relative p-6 bg-white rounded-lg border border-gray-200 shadow-md  dark:bg-gray-800 dark:border-gray-700 h-52">
 			<div className="w-48">
