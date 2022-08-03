@@ -45,7 +45,7 @@ function App() {
 							className="block p-2.5 w-full h-44 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 							placeholder="Word 1&#9;&#9;Definition 1&#10;Word 2&#9;Definition 2&#10;Word 3&#9;Definition 3"
 						></textarea>
-						<p className="text-base dark:text-slate-400">Choose a way of learning ⬇️</p>
+						{/* <p className="text-base dark:text-slate-400">Choose a way of learning ⬇️</p>
 						<ul className="w-full items-center text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
 							<li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
 								<div className="flex items-center pl-3">
@@ -71,7 +71,7 @@ function App() {
 									</label>
 								</div>
 							</li>
-						</ul>
+						</ul> */}
 						<button onClick={() => setInput({learnMode: true, terms: parseTerms(inputData.terms)})} href="#" className="float-right py-3 px-5 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 							Study 🧠
 						</button>
