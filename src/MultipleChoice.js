@@ -15,13 +15,13 @@ export default function MultipleChoice(props) {
 	}
 	randomTerms.push(termsArray[answerIndex]);
 
+	//randomTerms = randomTerms.filter((item, index) => randomTerms.indexOf(item) === index);
+
 	//shuffle randomTerms
 	for (let i = randomTerms.length - 1; i > 0; i--) {
 		let j = Math.floor(Math.random() * (i + 1));
 		[randomTerms[i], randomTerms[j]] = [randomTerms[j], randomTerms[i]];
 	}
-	
-	randomTerms = randomTerms.filter((item, index) => randomTerms.indexOf(item) === index);
 
 	return (
 		<a className="block p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 space-y-5">

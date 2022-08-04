@@ -33,7 +33,7 @@ export default function Learn(terms) {
 					<div className="bg-blue-600 h-2.5 w-45 rounded-full" style={{width: progress + "%"}}></div>
 				</div>
 			</div>
-			<p className="text-base dark:text-slate-400 text-right">{wordCounter}</p>
+			{/* <p className="text-base dark:text-slate-400 text-right">{wordCounter}</p> */}
 			{wordCounter % 10 !== 0 && questionElement}
 			{wordCounter % 10 === 0 && <Results terms={termsArray} setLearnCounter={setLearnCounter}></Results>}
 			<p className="text-base dark:text-slate-400">
