@@ -95,8 +95,8 @@ function App() {
 				</span>
 				<ul className="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
 					<li>
-						<a href="#" className="mr-4 hover:underline md:mr-6 ">
-							About
+						<a href="https://twitter.com/andrewdavidy" className="mr-4 hover:underline md:mr-6 ">
+							Twitter
 						</a>
 					</li>
 					<li>
@@ -117,7 +117,6 @@ function App() {
 
 function TermsTable(props) {
 	const termsArray = props.terms;
-	console.log(termsArray);
 	return (
 		<div className="overflow-x-auto relative shadow-md sm:rounded-lg pb-20">
 			<table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">

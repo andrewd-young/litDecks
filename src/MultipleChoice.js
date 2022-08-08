@@ -6,6 +6,8 @@ export default function MultipleChoice(props) {
 
 	//generate an array of 3 random terms that are not at answer index
 	let randomTerms = [];
+	randomTerms.push(termsArray[answerIndex]);
+
 	for (let i = 0; i < 3; i++) {
 		let randomIndex = Math.floor(Math.random() * termsArray.length);
 		while (randomIndex === answerIndex) {
@@ -13,9 +15,9 @@ export default function MultipleChoice(props) {
 		}
 		randomTerms.push(termsArray[randomIndex]);
 	}
-	randomTerms.push(termsArray[answerIndex]);
 
-	//randomTerms = randomTerms.filter((item, index) => randomTerms.indexOf(item) === index);
+	randomTerms = randomTerms.filter((item, index) => randomTerms.indexOf(item) === index);
+	randomTerms.length = 4;
 
 	//shuffle randomTerms
 	for (let i = randomTerms.length - 1; i > 0; i--) {
@@ -42,7 +44,6 @@ function Choice(props) {
 	const [selected, setSelected] = useState("yes");
 
 	const handleChange = (event) => {
-		console.log(true);
 		setSelected(event.target.checked);
 	};
 
@@ -62,7 +63,6 @@ function Choice(props) {
 							props.setLearnCounter();
 							if (props.potentialAnswer === props.termsArray[props.answerIndex][0]) {
 								props.termsArray[props.answerIndex][2] = 1;
-								console.log("correct");
 							}
 						}
 					}}
