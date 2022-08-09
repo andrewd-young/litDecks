@@ -1,4 +1,5 @@
 import {useState} from "react";
+import ReactDOMServer from "react-dom/server";
 
 export default function MultipleChoice(props) {
 	const termsArray = props.terms;
@@ -26,16 +27,19 @@ export default function MultipleChoice(props) {
 	}
 
 	return (
-		<a className="block p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 space-y-5">
-			<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{termsArray[answerIndex][1]}</label>
-			<ul className="grid gap-6 w-full md:grid-cols-2">
-				{randomTerms.map((term) => {
-					return <Choice potentialAnswer={term[0]} answerIndex={answerIndex} termsArray={termsArray} key={term[0]} setLearnCounter={props.setLearnCounter}></Choice>;
-				})}
-				<li>
-					<input checked type="radio" name="choice" value="choice-big" className="peer hidden"></input>
-				</li>
-			</ul>
+		<a className="relative block bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 space-y-5">
+			<div id="cardOverlay"></div>
+			<div className="p-6">
+				<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{termsArray[answerIndex][1]}</label>
+				<ul className="grid gap-6 w-full md:grid-cols-2">
+					{randomTerms.map((term) => {
+						return <Choice potentialAnswer={term[0]} answerIndex={answerIndex} termsArray={termsArray} key={term[0]} setLearnCounter={props.setLearnCounter}></Choice>;
+					})}
+					<li>
+						<input checked type="radio" name="choice" value="choice-big" className="peer hidden"></input>
+					</li>
+				</ul>
+			</div>
 		</a>
 	);
 }
@@ -49,7 +53,13 @@ function Choice(props) {
 
 	return (
 		<li>
-			<label className={selected ? "inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700" : "inline-flex justify-between items-center p-5 w-full bg-white rounded-lg border cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:text-blue-500 border-blue-600 text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700"}>
+			<label
+				className={
+					selected
+						? "inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
+						: "inline-flex justify-between items-center p-5 w-full bg-white rounded-lg border cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:text-blue-500 border-blue-600 text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700"
+				}
+			>
 				{props.potentialAnswer}
 				<input
 					type="radio"
@@ -61,8 +71,29 @@ function Choice(props) {
 					onKeyDown={(e) => {
 						if (e.key === "Enter") {
 							props.setLearnCounter();
+
+							setTimeout(() => {
+								document.getElementById("cardOverlay").innerHTML = "";
+							}, 1000);
+
 							if (props.potentialAnswer === props.termsArray[props.answerIndex][0]) {
 								props.termsArray[props.answerIndex][2] = 1;
+								document.getElementById("cardOverlay").innerHTML = ReactDOMServer.renderToString(
+									<div className="flex absolute w-full h-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+										<h1 className="m-auto text-5xl text-green-500">
+											<b>Correct!</b>
+										</h1>
+									</div>
+								);
+							}
+							else{
+								document.getElementById("cardOverlay").innerHTML = ReactDOMServer.renderToString(
+									<div className="flex absolute w-full h-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+										<h1 className="m-auto text-5xl text-red-500">
+											<b>Incorrect X</b>
+										</h1>
+									</div>
+								);
 							}
 						}
 					}}
