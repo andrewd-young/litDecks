@@ -27,7 +27,6 @@ export default function Result(props) {
 	function eventAcceptor(e) {
 		var code = e.code;
 		if (code === "Enter") {
-			console.log("enter pressed");
 			props.setLearnCounter();
 			document.removeEventListener("keypress", eventAcceptor, false);
 		}

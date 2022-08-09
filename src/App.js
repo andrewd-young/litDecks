@@ -1,6 +1,7 @@
 import "./App.css";
 import Learn from "./Learn";
 import {useState} from "react";
+import ReactDOMServer from "react-dom/server";
 
 function parseTerms(terms) {
 	const termsArray = terms.split("\n");
@@ -32,6 +33,7 @@ function App() {
 					{!inputData.submittedSet ? (
 						<div className="mx-auto w-3/4 space-y-5">
 							<p className="text-base dark:text-slate-400 text-right">⬇️ Paste right from other sites to get started</p>
+							<div id="emptyAlert"></div>
 							<textarea
 								id="message"
 								value={inputData.terms}
@@ -42,7 +44,15 @@ function App() {
 							></textarea>
 							<button
 								onClick={() => {
-									setInput({learnMode: false, submittedSet: true, terms: parseTerms(inputData.terms)});
+									if (parseTerms(inputData.terms)[0][0].length > 0) {
+										setInput({learnMode: false, submittedSet: true, terms: parseTerms(inputData.terms)});
+									} else {
+										document.getElementById("emptyAlert").innerHTML = ReactDOMServer.renderToString(
+											<div className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+												<span class="font-medium">Hold on!</span> Make sure to add some terms first
+											</div>
+										);
+									}
 								}}
 								href="#"
 								className="float-right py-3 px-5 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

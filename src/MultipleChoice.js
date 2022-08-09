@@ -51,6 +51,14 @@ function Choice(props) {
 		setSelected(event.target.checked);
 	};
 
+	function eventAcceptor(e) {
+		var code = e.code;
+		if (code === "Enter") {
+			document.getElementById("cardOverlay").innerHTML = "";
+			document.removeEventListener("keypress", eventAcceptor, false);
+		}
+	}
+
 	return (
 		<li>
 			<label
@@ -72,26 +80,33 @@ function Choice(props) {
 						if (e.key === "Enter") {
 							props.setLearnCounter();
 
-							setTimeout(() => {
-								document.getElementById("cardOverlay").innerHTML = "";
-							}, 1000);
-
 							if (props.potentialAnswer === props.termsArray[props.answerIndex][0]) {
+								setTimeout(() => {
+									document.getElementById("cardOverlay").innerHTML = "";
+								}, 1000);
 								props.termsArray[props.answerIndex][2] = 1;
 								document.getElementById("cardOverlay").innerHTML = ReactDOMServer.renderToString(
 									<div className="flex absolute w-full h-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
 										<h1 className="m-auto text-5xl text-green-500">
 											<b>Correct!</b>
+											<svg className="w-12 h-12 float-right" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
 										</h1>
 									</div>
 								);
 							}
 							else{
+								setTimeout(() => {
+									document.addEventListener("keypress", eventAcceptor, false);
+								}
+								, 1000);
 								document.getElementById("cardOverlay").innerHTML = ReactDOMServer.renderToString(
 									<div className="flex absolute w-full h-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
 										<h1 className="m-auto text-5xl text-red-500">
-											<b>Incorrect X</b>
+											<b>Incorrect</b>
+											<svg className="w-12 h-12 float-right" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
 										</h1>
+										<p className="text-base dark:text-slate-400 m-auto">You said <b>{props.potentialAnswer}</b></p>
+										<p className="text-base dark:text-slate-400 m-auto">The correct answer was <b>{props.termsArray[props.answerIndex][0]}</b></p>
 									</div>
 								);
 							}
