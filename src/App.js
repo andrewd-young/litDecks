@@ -1,5 +1,6 @@
 import "./App.css";
 import Learn from "./Learn";
+import Logo from "./Logo";
 import {useState} from "react";
 import ReactDOMServer from "react-dom/server";
 
@@ -24,9 +25,10 @@ function App() {
 		<div className="relative mx-auto flex flex-col min-h-screen w-4/5">
 			{!inputData.learnMode ? (
 				<div className="mt-12 space-y-5">
-					<h1 className="text-7xl dark:text-white">
-						<b>toLearned</b>
-					</h1>
+					<div className="relative">
+						<Logo className="absolute bottom-0 h-16 float-left mr-5"></Logo>
+						<h1 className="text-7xl dark:text-white ml-20"><b>toLearned</b></h1>
+					</div>
 					<p className="text-lg dark:text-slate-400">
 						Study it all right here - <b>free forever</b>
 					</p>
