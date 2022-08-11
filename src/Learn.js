@@ -4,11 +4,12 @@ import Results from "./Results";
 import Finished from "./Finished";
 import {useState} from "react";
 import {Fireworks} from "@fireworks-js/react";
+import PreviousMap from "postcss/lib/previous-map";
 
 let progress = 0;
 
-export default function Learn(terms) {
-	let termsArray = terms.terms;
+export default function Learn(props) {
+	let termsArray = props.terms;
 	let [wordCounter, setCounter] = useState(1);
 	let questionSeed = Math.random();
 	let finishedSet = true;
@@ -63,11 +64,13 @@ export default function Learn(terms) {
 				<div id="cardOverlay"></div>
 				{wordCounter % 10 !== 0 && !finishedSet && questionElement}
 				{wordCounter % 10 === 0 && !finishedSet && <Results terms={termsArray} setLearnCounter={setLearnCounter}></Results>}
-				{finishedSet && <Finished terms={termsArray} setLearnCounter={setLearnCounter}></Finished>}
+				{finishedSet && <Finished terms={termsArray} setLearnCounter={setLearnCounter} setAppInput={props.setAppInput}></Finished>}
 			</div>
-			<p className="text-base dark:text-slate-400">
-				Press <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Enter</kbd> to {wordCounter !== 10 ? "answer" : "continue"}
-			</p>
+			{wordCounter % 10 !== 0 && !finishedSet && (
+				<p className="text-base dark:text-slate-400">
+					Press <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Enter</kbd> to {wordCounter !== 10 ? "answer" : "continue"}
+				</p>
+			)}
 		</div>
 	);
 }
