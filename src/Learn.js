@@ -1,6 +1,7 @@
 import MultipleChoice from "./MultipleChoice";
 import Written from "./Written";
 import Results from "./Results";
+import Finished from "./Finished";
 import {useState} from "react";
 import {Fireworks} from "@fireworks-js/react";
 
@@ -13,14 +14,7 @@ export default function Learn(terms) {
 	let finishedSet = true;
 
 	let setLearnCounter = () => {
-		let sum = 0;
-		for (let i = 0; i < termsArray.length; i++) {
-			sum += termsArray[i][2];
-		}
-
 		setCounter(wordCounter + 1);
-		progress = (sum / (termsArray.length * 3)) * 100;
-
 
 		while (!finishedSet && termsArray[Math.floor(questionSeed * termsArray.length)][2] === 3) {
 			questionSeed = Math.random();
@@ -29,12 +23,18 @@ export default function Learn(terms) {
 		questionElement = termsArray[Math.floor(Math.random() * termsArray.length)][2] === 0 ? <MultipleChoice terms={termsArray} questionSeed={questionSeed} setLearnCounter={setLearnCounter} /> : <Written terms={termsArray} questionSeed={questionSeed} setLearnCounter={setLearnCounter} />;
 	};
 
-	//check if all 3rd slots in termsArray are 3 and if so set finishedSet to true
+	// check if all 3rd slots in termsArray are 3 and if so set finishedSet to true
 	for (let i = 0; i < termsArray.length; i++) {
 		if (termsArray[i][2] !== 3) {
 			finishedSet = false;
 		}
 	}
+
+	let sum = 0;
+	for (let i = 0; i < termsArray.length; i++) {
+		sum += termsArray[i][2];
+	}
+	progress = (sum / (termsArray.length * 3)) * 100;
 
 	let questionElement = termsArray[Math.floor(Math.random() * termsArray.length)][2] === 0 ? <MultipleChoice terms={termsArray} questionSeed={questionSeed} setLearnCounter={setLearnCounter} /> : <Written terms={termsArray} questionSeed={questionSeed} setLearnCounter={setLearnCounter} />;
 
@@ -59,9 +59,12 @@ export default function Learn(terms) {
 					<div className="bg-blue-600 h-2.5 w-45 rounded-full" style={{width: progress + "%"}}></div>
 				</div>
 			</div>
-			{/* <p className="text-base dark:text-slate-400 text-right">{wordCounter}</p> */}
-			{wordCounter % 10 !== 0 && questionElement}
-			{wordCounter % 10 === 0 && <Results terms={termsArray} setLearnCounter={setLearnCounter}></Results>}
+			<div className="relative">
+				<div id="cardOverlay"></div>
+				{wordCounter % 10 !== 0 && !finishedSet && questionElement}
+				{wordCounter % 10 === 0 && !finishedSet && <Results terms={termsArray} setLearnCounter={setLearnCounter}></Results>}
+				{finishedSet && <Finished terms={termsArray} setLearnCounter={setLearnCounter}></Finished>}
+			</div>
 			<p className="text-base dark:text-slate-400">
 				Press <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Enter</kbd> to {wordCounter !== 10 ? "answer" : "continue"}
 			</p>

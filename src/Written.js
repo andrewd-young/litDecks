@@ -20,8 +20,7 @@ export default function Written(props) {
 	}
 
 	return (
-		<div className="relative space-y-5 block bg-white rounded-lg border border-gray-200 shadow-md  dark:bg-gray-800 dark:border-gray-700 h-52">
-			<div id="cardOverlay"></div>
+		<div className="space-y-5 block bg-white rounded-lg border border-gray-200 shadow-md  dark:bg-gray-800 dark:border-gray-700 h-52">
 			<div className="p-6">
 				<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{termsArray[answerIndex][1]}</label>
 				<input
@@ -36,11 +35,8 @@ export default function Written(props) {
 								}, 1000);
 								document.getElementById("cardOverlay").innerHTML = ReactDOMServer.renderToString(
 									<div className="flex absolute w-full h-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-										<h1 className="m-auto text-5xl text-green-500">
-											<b>Correct!</b>
-											<svg className="w-12 h-12 float-right" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-											</svg>
+										<h1 className="text-center m-auto text-5xl text-green-500">
+											<b>✅ Correct!</b>
 										</h1>
 									</div>
 								);
@@ -51,11 +47,8 @@ export default function Written(props) {
 								}, 1000);
 								document.getElementById("cardOverlay").innerHTML = ReactDOMServer.renderToString(
 									<div className="flex absolute w-full h-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-										<h1 className="m-auto text-5xl text-red-500">
-											<b>Incorrect</b>
-											<svg className="w-12 h-12 float-right" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-											</svg>
+										<h1 className="text-center m-auto text-5xl text-red-500">
+											<b>❌ Incorrect</b>
 										</h1>
 										<p className="text-base dark:text-slate-400 m-auto">
 											You said <b>{message}</b>

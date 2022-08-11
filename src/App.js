@@ -27,7 +27,9 @@ function App() {
 				<div className="mt-12 space-y-5">
 					<div className="relative">
 						<Logo className="absolute bottom-0 h-16 float-left mr-5"></Logo>
-						<h1 className="text-7xl dark:text-white ml-20"><b>toLearned</b></h1>
+						<h1 className="text-7xl dark:text-white ml-20">
+							<b>toLearned</b>
+						</h1>
 					</div>
 					<p className="text-lg dark:text-slate-400">
 						Study it all right here - <b>free forever</b>
@@ -36,14 +38,23 @@ function App() {
 						<div className="mx-auto w-3/4 space-y-5">
 							<p className="text-base dark:text-slate-400 text-right">⬇️ Paste right from other sites to get started</p>
 							<div id="emptyAlert"></div>
-							<textarea
-								id="message"
-								value={inputData.terms}
-								onChange={handleInputChange}
-								rows="4"
-								className="block p-2.5 w-full h-44 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-								placeholder="Word 1&#9;&#9;Definition 1&#10;Word 2&#9;Definition 2&#10;Word 3&#9;Definition 3"
-							></textarea>
+							<div className="relative">
+								<div id="placeholderOverlay" className="w-full h-full p-2.5 absolute pointer-events-none">
+									{inputData.terms === "" && (
+										<p className="text-sm dark:text-gray-400">
+											Word 1&emsp;Definition 1<br></br>Word 2&emsp;Definition 2<br></br>Word 3&emsp;Definition 3
+										</p>
+									)}
+								</div>
+								<textarea
+									id="message"
+									value={inputData.terms}
+									onChange={handleInputChange}
+									rows="4"
+									className="block p-2.5 w-full h-44 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+									// placeholder="Word 1&#9;&#9;Definition 1&#10;Word 2&#9;Definition 2&#10;Word 3&#9;Definition 3"
+								></textarea>
+							</div>
 							<button
 								onClick={() => {
 									if (parseTerms(inputData.terms)[0][0].length > 0) {
