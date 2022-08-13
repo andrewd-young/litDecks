@@ -23,7 +23,7 @@ function App() {
 
 	const setAppInput = (object) => {
 		setInput(object);
-	}
+	};
 
 	return (
 		<div className="relative mx-auto flex flex-col min-h-screen w-4/5">
@@ -45,7 +45,7 @@ function App() {
 							<div className="relative">
 								<div id="placeholderOverlay" className="w-full h-full p-2.5 absolute pointer-events-none">
 									{inputData.terms === "" && (
-										<p className="text-sm dark:text-gray-400">
+										<p className="text-sm text-gray-400">
 											Word 1&emsp;Definition 1<br></br>Word 2&emsp;Definition 2<br></br>Word 3&emsp;Definition 3
 										</p>
 									)}
@@ -78,7 +78,7 @@ function App() {
 							</button>
 						</div>
 					) : (
-						<div className="mx-auto w-3/4 space-y-5">
+						<div className="mx-auto w-3/4 space-y-5 pb-20">
 							<div className="space-x-5">
 								<button
 									onClick={() => {
@@ -111,7 +111,7 @@ function App() {
 					)}
 				</div>
 			) : (
-				<Learn terms={inputData.terms} setAppInput={setAppInput}/>
+				<Learn terms={inputData.terms} setAppInput={setAppInput} />
 			)}
 			<footer className="absolute bottom-0 w-full p-4  md:items-center md:justify-between md:p-6 md:flex ">
 				<span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
@@ -145,7 +145,7 @@ function App() {
 function TermsTable(props) {
 	const termsArray = props.terms;
 	return (
-		<div className="overflow-x-auto relative shadow-md sm:rounded-lg pb-20">
+		<div className="overflow-x-auto relative shadow-md sm:rounded-lg">
 			<table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 				<thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 					<tr>

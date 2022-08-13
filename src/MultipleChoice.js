@@ -29,7 +29,7 @@ export default function MultipleChoice(props) {
 	return (
 		<a className="block bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 space-y-5">
 			<div className="p-6">
-				<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{termsArray[answerIndex][1]}</label>
+				<label className="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300"><b>{termsArray[answerIndex][1]}</b></label>
 				<ul className="grid gap-6 w-full md:grid-cols-2">
 					{randomTerms.map((term) => {
 						return <Choice potentialAnswer={term[0]} answerIndex={answerIndex} termsArray={termsArray} key={term[0]} setLearnCounter={props.setLearnCounter}></Choice>;

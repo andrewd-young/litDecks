@@ -22,7 +22,9 @@ export default function Written(props) {
 	return (
 		<div className="space-y-5 block bg-white rounded-lg border border-gray-200 shadow-md  dark:bg-gray-800 dark:border-gray-700 h-52">
 			<div className="p-6">
-				<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{termsArray[answerIndex][1]}</label>
+				<label className="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">
+					<b>{termsArray[answerIndex][1]}</b>
+				</label>
 				<input
 					onChange={handleChange}
 					onKeyDown={(e) => {
@@ -50,9 +52,11 @@ export default function Written(props) {
 										<h1 className="text-center m-auto text-5xl text-red-500">
 											<b>❌ Incorrect</b>
 										</h1>
-										<p className="text-base dark:text-slate-400 m-auto">
-											You said <b>{message}</b>
-										</p>
+										{message.length > 0 && (
+											<p className="text-base dark:text-slate-400 m-auto">
+												You said <b>{message}</b>
+											</p>
+										)}
 										<p className="text-base dark:text-slate-400 m-auto">
 											The correct answer was <b>{termsArray[answerIndex][0]}</b>
 										</p>

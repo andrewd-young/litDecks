@@ -66,7 +66,7 @@ export default function Learn(props) {
 				{wordCounter % 10 === 0 && !finishedSet && <Results terms={termsArray} setLearnCounter={setLearnCounter}></Results>}
 				{finishedSet && <Finished terms={termsArray} setLearnCounter={setLearnCounter} setAppInput={props.setAppInput}></Finished>}
 			</div>
-			{wordCounter % 10 !== 0 && !finishedSet && (
+			{!finishedSet && (
 				<p className="text-base dark:text-slate-400">
 					Press <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Enter</kbd> to {wordCounter !== 10 ? "answer" : "continue"}
 				</p>
