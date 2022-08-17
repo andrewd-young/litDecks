@@ -1,7 +1,7 @@
 import "./App.css";
 import Learn from "./Learn";
 import Logo from "./Logo";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import ReactDOMServer from "react-dom/server";
 
 function parseTerms(terms) {
@@ -15,15 +15,35 @@ function parseTerms(terms) {
 }
 
 function App() {
+	const [data, setData] = useState(null);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
+
 	const [inputData, setInput] = useState({learnMode: false, submittedSet: false, terms: ""});
 
 	const handleInputChange = (event) => {
 		setInput({learnMode: false, submittedSet: false, terms: event.target.value});
 	};
-
 	const setAppInput = (object) => {
 		setInput(object);
 	};
+
+	//bypass cors to fetch html from quizlet set https://quizlet.com/675466040/50-state-capitals-flash-cards/
+	useEffect(() => {
+		if (inputData.submittedSet) {
+			fetch(`https://quizlet.com/675466040/50-state-capitals-flash-cards/`, {mode: "no-cors"}).then((response) => {
+				response.text().then((text) => {
+					const terms = text.split('<div class="term">');
+					const termsArray = [];
+					for (let i = 1; i < terms.length; i++) {
+						const term = terms[i].split("</div>")[0];
+						const definition = term.split('<div class="definition">')[1].split("</div>")[0];
+						termsArray.push([i - 1, term, definition]);
+					}
+				});
+			});
+		}
+	});
 
 	return (
 		<div className="relative mx-auto flex flex-col min-h-screen w-4/5">
@@ -45,7 +65,7 @@ function App() {
 							<div className="relative">
 								<div id="placeholderOverlay" className="w-full h-full p-2.5 absolute pointer-events-none">
 									{inputData.terms === "" && (
-										<p className="text-sm text-gray-400">
+										<p className="text-sm dark:text-[#9BA3AF]">
 											Word 1&emsp;Definition 1<br></br>Word 2&emsp;Definition 2<br></br>Word 3&emsp;Definition 3
 										</p>
 									)}
@@ -55,10 +75,26 @@ function App() {
 									value={inputData.terms}
 									onChange={handleInputChange}
 									rows="4"
+									onKeyDown={(e) => {
+										if (e.key == "Tab") {
+											e.preventDefault();
+											var start = document.getElementById("message").selectionStart;
+											var end = document.getElementById("message").selectionEnd;
+
+											// set textarea value to: text before caret + tab + text after caret
+											document.getElementById("message").value = document.getElementById("message").value.substring(0, start) + "\t" + document.getElementById("message").value.substring(end);
+
+											// put caret at right position again
+											document.getElementById("message").selectionStart = document.getElementById("message").selectionEnd = start + 1;
+											console.log(document.getElementById("message").value);
+										}
+									}}
 									className="block p-2.5 w-full h-44 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 									// placeholder="Word 1&#9;&#9;Definition 1&#10;Word 2&#9;Definition 2&#10;Word 3&#9;Definition 3"
 								></textarea>
 							</div>
+							<p className="text-base dark:text-slate-400">⬇️ Or import straight from a URL</p>
+							<input type="text" id="default-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://quizlet.com/_b65kxk?x=1jqt&i=142riv"></input>
 							<button
 								onClick={() => {
 									if (parseTerms(inputData.terms)[0][0].length > 0) {
