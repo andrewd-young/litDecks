@@ -1,8 +1,9 @@
 import "./App.css";
 import Learn from "./Learn";
 import Logo from "./Logo";
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import ReactDOMServer from "react-dom/server";
+import axios from "axios";
 
 function parseTerms(terms) {
 	const termsArray = terms.split("\n");
@@ -15,35 +16,35 @@ function parseTerms(terms) {
 }
 
 function App() {
-	const [data, setData] = useState(null);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
-
 	const [inputData, setInput] = useState({learnMode: false, submittedSet: false, terms: ""});
 
 	const handleInputChange = (event) => {
 		setInput({learnMode: false, submittedSet: false, terms: event.target.value});
 	};
+
+	const handleUrlInputChange = async (event) => {
+		if (event.target.value.length > 0) {
+			// check if event.target.value contains 'https://'
+			if (!event.target.value.includes("https://")) {
+				event.target.value = "https://" + event.target.value;
+			}
+			axios
+				.get(event.target.value, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "text/plain",
+				})
+				.then((res) => {
+					const text = res.data;
+					setInput({learnMode: false, submittedSet: false, terms: text});
+				});
+		}
+	};
+
 	const setAppInput = (object) => {
 		setInput(object);
 	};
 
 	//bypass cors to fetch html from quizlet set https://quizlet.com/675466040/50-state-capitals-flash-cards/
-	useEffect(() => {
-		if (inputData.submittedSet) {
-			fetch(`https://quizlet.com/675466040/50-state-capitals-flash-cards/`, {mode: "no-cors"}).then((response) => {
-				response.text().then((text) => {
-					const terms = text.split('<div class="term">');
-					const termsArray = [];
-					for (let i = 1; i < terms.length; i++) {
-						const term = terms[i].split("</div>")[0];
-						const definition = term.split('<div class="definition">')[1].split("</div>")[0];
-						termsArray.push([i - 1, term, definition]);
-					}
-				});
-			});
-		}
-	});
 
 	return (
 		<div className="relative mx-auto flex flex-col min-h-screen w-4/5">
@@ -94,7 +95,13 @@ function App() {
 								></textarea>
 							</div>
 							<p className="text-base dark:text-slate-400">⬇️ Or import straight from a URL</p>
-							<input type="text" id="default-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://quizlet.com/_b65kxk?x=1jqt&i=142riv"></input>
+							<input
+								type="text"
+								id="urlInput"
+								onChange={handleUrlInputChange}
+								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+								placeholder="https://quizlet.com/_b65kxk?x=1jqt&i=142riv"
+							></input>
 							<button
 								onClick={() => {
 									if (parseTerms(inputData.terms)[0][0].length > 0) {
@@ -102,7 +109,7 @@ function App() {
 									} else {
 										document.getElementById("emptyAlert").innerHTML = ReactDOMServer.renderToString(
 											<div className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
-												<span class="font-medium">Hold on!</span> Make sure to add some terms first
+												<span className="font-medium">Hold on!</span> Make sure to add some terms first
 											</div>
 										);
 									}
