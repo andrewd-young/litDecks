@@ -133,6 +133,7 @@ function App() {
 					<a href="https://toLearned.com/" className="hover:underline">
 						toLearned
 					</a>
+					{" "}by Andrew Young
 				</span>
 				<ul className="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
 					<li>
