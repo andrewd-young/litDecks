@@ -55,20 +55,6 @@ function App() {
 									value={inputData.terms}
 									onChange={handleInputChange}
 									rows="4"
-									onKeyDown={(e) => {
-										if (e.key == "Tab") {
-											e.preventDefault();
-											var start = document.getElementById("message").selectionStart;
-											var end = document.getElementById("message").selectionEnd;
-
-											// set textarea value to: text before caret + tab + text after caret
-											document.getElementById("message").value = document.getElementById("message").value.substring(0, start) + "\t" + document.getElementById("message").value.substring(end);
-
-											// put caret at right position again
-											document.getElementById("message").selectionStart = document.getElementById("message").selectionEnd = start + 1;
-											console.log(document.getElementById("message").value);
-										}
-									}}
 									className="block p-2.5 w-full h-44 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 									// placeholder="Word 1&#9;&#9;Definition 1&#10;Word 2&#9;Definition 2&#10;Word 3&#9;Definition 3"
 								></textarea>
@@ -132,8 +118,8 @@ function App() {
 					© 2022{" "}
 					<a href="https://toLearned.com/" className="hover:underline">
 						toLearned
-					</a>
-					{" "}by Andrew Young
+					</a>{" "}
+					by Andrew Young
 				</span>
 				<ul className="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
 					<li>
